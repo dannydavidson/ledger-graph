@@ -1,0 +1,32 @@
+{
+  "name": "ledger-graph",
+  "version": "0.1.0",
+  "description": "POC ledger and reporting API using neo4j",
+  "main": "server.js",
+  "scripts": {
+    "test": "mocha --recursive test",
+    "develop": "nodemon server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/dannydavidson/ledger-graph.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/dannydavidson/ledger-graph/issues"
+  },
+  "homepage": "https://github.com/dannydavidson/ledger-graph#readme",
+  "devDependencies": {
+    "eslint": "^2.3.0",
+    "eslint-config-defaults": "^9.0.0",
+    "expect": "^1.14.0",
+    "mocha": "^2.4.5",
+    "nodemon": "^1.9.1"
+  },
+  "dependencies": {
+    "express": "^4.13.4",
+    "seraph": "^0.14.2",
+    "winston": "^2.2.0"
+  }
+}
