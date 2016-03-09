@@ -11,12 +11,16 @@ describe('handlers/health', () => {
 
   describe('isOk', () => {
 
-    it('responds 200 and logs notice if db does not error', () => {
-      let db = dbMock();
-      let logger = loggerMock();
-      let res = resMock();
-      let handler = isOk(db, logger);
+    let db, logger, res, handler;
 
+    beforeEach(() => {
+      db = dbMock();
+      logger = loggerMock();
+      res = resMock();
+      handler = isOk(db, logger);
+    });
+
+    it('responds 200 and logs notice if db does not error', () => {
       handler({}, res);
       expect(db.read.calls[0].arguments[0]).toBe(0);
 
@@ -27,11 +31,6 @@ describe('handlers/health', () => {
     });
 
     it('responds 500 and logs emergency if db errors', () => {
-      let db = dbMock();
-      let logger = loggerMock();
-      let res = resMock();
-      let handler = isOk(db, logger);
-
       handler({}, res);
 
       db.callback('read', {statusCode: 500});
