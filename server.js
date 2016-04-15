@@ -6,7 +6,7 @@ const winston = require('winston');
 
 const app = express();
 const db = seraph({
-  server: process.env.DB_ADDRESS || 'http://localhost:7474',
+  server: process.env.DB_ADDRESS || 'http://neo4j:7474',
   user: process.env.DB_USER || 'neo4j',
   pass: process.env.DB_PASS || 'neo4j'
 });
@@ -21,6 +21,6 @@ logger.setLevels(winston.config.syslog.levels);
 app.get('/ok', require('./handlers/health').isOk(db, logger));
 app.use('/ledger', require('./routers/ledger')(db, logger));
 
-app.listen(process.env.PORT || 11234, () => {
+app.listen(process.env.PORT || 11235, () => {
   console.log('Server started.');
 });

@@ -5,7 +5,7 @@
   "main": "server.js",
   "scripts": {
     "test": "mocha --recursive test",
-    "develop": "nodemon server.js"
+    "start": "nodemon -L server.js"
   },
   "repository": {
     "type": "git",
