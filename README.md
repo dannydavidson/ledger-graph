@@ -1,4 +1,6 @@
 # ledger-graph
+[ ![Codeship Status for dannydavidson/ledger-graph](https://codeship.com/projects/f5a91680-e610-0133-013c-060b11b22fb9/status?branch=master)](https://codeship.com/projects/146704)
+
 POC ledger and reporting API using neo4j
 
 ## Install
