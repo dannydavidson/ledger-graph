@@ -27,7 +27,7 @@ describe('handlers/health', () => {
       db.callback('read', null);
       expect(logger.notice).toHaveBeenCalled();
       expect(res.status).toHaveBeenCalledWith(200);
-      expect(res.end).toHaveBeenCalled();
+      expect(res.send).toHaveBeenCalledWith('HEALTHY');
     });
 
     it('responds 500 and logs emergency if db errors', () => {
@@ -36,7 +36,7 @@ describe('handlers/health', () => {
       db.callback('read', {statusCode: 500});
       expect(logger.emerg).toHaveBeenCalled();
       expect(res.status).toHaveBeenCalledWith(500);
-      expect(res.end).toHaveBeenCalled();
+      expect(res.send).toHaveBeenCalledWith('UNHEALTHY');
     });
 
   });
