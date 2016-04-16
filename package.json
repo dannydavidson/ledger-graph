@@ -5,7 +5,9 @@
   "main": "server.js",
   "scripts": {
     "test": "mocha --recursive test",
-    "start": "nodemon -L server.js"
+    "start": "nodemon -L server.js",
+    "cover": "istanbul cover _mocha ./test/**/*.js -- -R spec",
+    "coverage": "npm run cover && cat ./coverage/lcov.info | ./node_modules/coveralls/bin/coveralls.js"
   },
   "repository": {
     "type": "git",
@@ -21,9 +23,11 @@
   },
   "homepage": "https://github.com/dannydavidson/ledger-graph#readme",
   "devDependencies": {
+    "coveralls": "^2.11.9",
     "eslint": "^2.3.0",
     "eslint-config-defaults": "^9.0.0",
     "expect": "^1.14.0",
+    "istanbul": "^0.4.3",
     "mocha": "^2.4.5",
     "nodemon": "^1.9.1"
   },
