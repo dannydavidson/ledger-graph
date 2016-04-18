@@ -9,3 +9,8 @@ test:
   override:
     - npm test
     - npm run coverage
+deployment:
+  staging:
+    branch: master
+    commands:
+    - bin/deploy-staging.sh
