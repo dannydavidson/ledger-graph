@@ -13,5 +13,5 @@ docker build -t ledger-graph .
 docker tag ledger-graph gcr.io/ledger-graph/ledger-graph
 gcloud docker push gcr.io/ledger-graph/ledger-graph
 
-gcloud kubectl delete -f ledger-graph-rc.json
-gcloud kubectl create -f ledger-graph-rc.json
+kubectl delete -f ledger-graph-rc.json
+kubectl create -f ledger-graph-rc.json
