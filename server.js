@@ -22,5 +22,5 @@ app.get('/ok', require('./handlers/health').isOk(db, logger));
 app.use('/ledger', require('./routers/ledger')(db, logger));
 
 app.listen(process.env.PORT || 11235, () => {
-  console.log('Server started.');
+  logger.info('Server started.');
 });
