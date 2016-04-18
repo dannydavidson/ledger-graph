@@ -1,5 +1,5 @@
 # ledger-graph
-[![Circle CI](https://circleci.com/gh/dannydavidson/ledger-graph/tree/master.svg?style=svg)](https://circleci.com/gh/dannydavidson/ledger-graph/tree/master)
+[![Circle CI](https://circleci.com/gh/dannydavidson/ledger-graph/tree/master.svg?style=shield)](https://circleci.com/gh/dannydavidson/ledger-graph/tree/master)
 [![Coverage Status](https://coveralls.io/repos/github/dannydavidson/ledger-graph/badge.svg?branch=master)](https://coveralls.io/github/dannydavidson/ledger-graph?branch=master)
 
 POC ledger and reporting API using neo4j
