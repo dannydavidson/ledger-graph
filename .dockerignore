@@ -4,3 +4,7 @@ README.md
 docker-compose.yml
 node_modules
 coverage
+ledger-graph-rc.json
+ledger-graph-service.json
+neo4j-rc.json
+neo4j-service.json
