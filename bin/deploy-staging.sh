@@ -9,8 +9,8 @@ gcloud container clusters get-credentials staging
 gcloud --quiet components update
 gcloud --quiet components install kubectl
 
-gcloud docker build -t ledger-graph .
-gcloud docker tag ledger-graph gcr.io/ledger-graph/ledger-graph
+docker build -t ledger-graph .
+docker tag ledger-graph gcr.io/ledger-graph/ledger-graph
 gcloud docker push gcr.io/ledger-graph/ledger-graph
 
 gcloud kubectl delete -f ledger-graph-rc.json
