@@ -15,5 +15,4 @@ sudo docker build -q -t ledger-graph .
 sudo docker tag ledger-graph gcr.io/ledger-graph/ledger-graph
 sudo /opt/google-cloud-sdk/bin/gcloud docker push gcr.io/ledger-graph/ledger-graph
 
-sudo /opt/google-cloud-sdk/bin/kubectl delete -f ledger-graph-rc.json
-sudo /opt/google-cloud-sdk/bin/kubectl create -f ledger-graph-rc.json
+sudo /opt/google-cloud-sdk/bin/kubectl rolling-update ledger-graph -f ledger-graph-rc.json
