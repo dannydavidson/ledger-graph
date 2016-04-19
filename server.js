@@ -20,7 +20,7 @@ const logger = new winston.Logger({
 let v;
 
 try {
-  v = fs.readFileSync('./VERSION', 'utf-8');
+  v = fs.readFileSync('./VERSION', 'utf-8').trim();
 } catch (e) {}
 
 logger.setLevels(winston.config.syslog.levels);
