@@ -17,4 +17,4 @@ sudo docker build -q -t ledger-graph:${VERSION} .
 sudo docker tag ledger-graph:${VERSION} gcr.io/ledger-graph/ledger-graph:${VERSION}
 sudo /opt/google-cloud-sdk/bin/gcloud docker push gcr.io/ledger-graph/ledger-graph:${VERSION}
 
-sudo /opt/google-cloud-sdk/bin/kubectl rolling-update ledger-graph ledger-graph --image=gcr.io/ledger-graph/ledger-graph:${VERSION}
+sudo /opt/google-cloud-sdk/bin/kubectl rolling-update ledger-graph --image=gcr.io/ledger-graph/ledger-graph:${VERSION}
