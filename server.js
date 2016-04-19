@@ -1,5 +1,6 @@
 'use strict';
 
+const fs = require('fs');
 const express = require('express');
 const seraph = require('seraph');
 const winston = require('winston');
@@ -16,8 +17,15 @@ const logger = new winston.Logger({
   ]
 });
 
+let v;
+
+try {
+  v = fs.readFileSync('./VERSION', 'utf-8');
+} catch (e) {}
+
 logger.setLevels(winston.config.syslog.levels);
 
+app.get('/v', require('./handlers/version')(v || 'local', logger));
 app.get('/ok', require('./handlers/health').isOk(db, logger));
 app.use('/ledger', require('./routers/ledger')(db, logger));
 

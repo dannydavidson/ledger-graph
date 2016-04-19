@@ -1,5 +1,5 @@
 VERSION="$(git rev-parse HEAD)"
-
+echo ${VERSION} > VERSION
 echo $CLIENT_SECRET | base64 --decode > ${HOME}/client-secret.json
 
 sudo /opt/google-cloud-sdk/bin/gcloud config set compute/zone us-central1-a
