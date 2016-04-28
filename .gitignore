@@ -34,3 +34,6 @@ node_modules
 
 # Version artifact
 VERSION
+
+# certs
+certs/*

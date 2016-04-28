@@ -8,12 +8,14 @@
     "name": "ledger-graph"
   },
   "spec": {
-    "type": "LoadBalancer",
+    "type": "NodePort",
     "ports": [
       {
         "port": 80,
+        "nodePort": 30301,
         "targetPort": 11235,
-        "protocol": "TCP"
+        "protocol": "TCP",
+        "name": "http"
       }
     ],
     "selector": {

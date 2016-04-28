@@ -19,7 +19,7 @@
     "url": "https://github.com/dannydavidson/ledger-graph/issues"
   },
   "engines": {
-    "node": "5.7.1"
+    "node": "6"
   },
   "homepage": "https://github.com/dannydavidson/ledger-graph#readme",
   "devDependencies": {

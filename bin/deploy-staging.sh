@@ -13,9 +13,9 @@ sudo /opt/google-cloud-sdk/bin/gcloud auth activate-service-account --key-file $
 sudo /opt/google-cloud-sdk/bin/gcloud config set container/cluster staging
 sudo /opt/google-cloud-sdk/bin/gcloud container clusters get-credentials staging
 
-sudo docker build -q -t ledger-graph .
-sudo docker tag ledger-graph gcr.io/ledger-graph/ledger-graph
+sudo docker build -q -t ledger-graph:${VERSION} .
+sudo docker tag ledger-graph:${VERSION} gcr.io/ledger-graph/ledger-graph
 sudo /opt/google-cloud-sdk/bin/gcloud docker push gcr.io/ledger-graph/ledger-graph
 
-sudo /opt/google-cloud-sdk/bin/kubectl delete -f ledger-graph-rc.json
-sudo /opt/google-cloud-sdk/bin/kubectl create -f ledger-graph-rc.json
+sudo /opt/google-cloud-sdk/bin/kubectl delete -f ledger-graph-deployment.json
+sudo /opt/google-cloud-sdk/bin/kubectl create -f ledger-graph-deployment.json
