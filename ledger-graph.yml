@@ -1,0 +1,70 @@
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  creationTimestamp: null
+  labels:
+    app: ledger-graph
+    tier: api
+  name: ledger-graph-deployment
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: ledger-graph
+  strategy:
+    rollingUpdate:
+      maxSurge: 1
+      maxUnavailable: 1
+    type: RollingUpdate
+  template:
+    metadata:
+      creationTimestamp: null
+      labels:
+        app: ledger-graph
+      name: ledger-graph
+    spec:
+      containers:
+      - env:
+        - name: DB_USER
+          valueFrom:
+            secretKeyRef:
+              key: user
+              name: db-credentials
+        - name: DB_PASS
+          valueFrom:
+            secretKeyRef:
+              key: password
+              name: db-credentials
+        image: gcr.io/ledger-graph/ledger-graph:${VERSION}
+        imagePullPolicy: Always
+        name: ledger-graph
+        ports:
+        - containerPort: 11235
+          name: ledger-graph
+          protocol: TCP
+        resources:
+          limits:
+            cpu: 500m
+        terminationMessagePath: /dev/termination-log
+      dnsPolicy: ClusterFirst
+      restartPolicy: Always
+      securityContext: {}
+      terminationGracePeriodSeconds: 30
+---
+apiVersion: v1
+kind: Service
+metadata:
+  creationTimestamp: null
+  labels:
+    name: ledger-graph
+  name: ledger-graph
+spec:
+  ports:
+  - name: http
+    port: 80
+    protocol: TCP
+    targetPort: 11235
+  selector:
+    app: ledger-graph
+  sessionAffinity: None
+  type: NodePort

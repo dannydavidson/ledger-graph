@@ -1,0 +1,23 @@
+VERSION="$(git rev-parse HEAD)"
+echo ${VERSION} > VERSION
+echo $CLIENT_SECRET | base64 --decode > ${HOME}/client-secret.json
+
+sudo /opt/google-cloud-sdk/bin/gcloud config set compute/zone us-central1-a
+sudo /opt/google-cloud-sdk/bin/gcloud config set project $GCLOUD_PROJECT
+
+sudo /opt/google-cloud-sdk/bin/gcloud --quiet components install kubectl
+sudo /opt/google-cloud-sdk/bin/gcloud --quiet components update
+
+sudo /opt/google-cloud-sdk/bin/gcloud auth activate-service-account --key-file ${HOME}/client-secret.json
+
+sudo /opt/google-cloud-sdk/bin/gcloud config set container/cluster api-dannydavidson-com
+sudo /opt/google-cloud-sdk/bin/gcloud container clusters get-credentials api-dannydavidson-com
+
+sudo docker build -q -t ledger-graph:${VERSION} .
+sudo docker tag ledger-graph:${VERSION} gcr.io/ledger-graph/ledger-graph:${VERSION}
+sudo /opt/google-cloud-sdk/bin/gcloud docker push gcr.io/ledger-graph/ledger-graph:${VERSION}
+
+sed -i -e 's/{{LEDGER_GRAPH_VERSION}}/${VERSION}/g' ledger-graph.yml > ledger-graph.versioned.yml
+sudo /opt/google-cloud-sdk/bin/kubectl replace -f ledger-graph.versioned.yml
+
+sudo /opt/google-cloud-sdk/bin/kubectl replace -f neo4j.yml
