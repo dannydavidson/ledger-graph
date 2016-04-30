@@ -11,7 +11,7 @@ test:
     - npm test
     - npm run coverage
 deployment:
-  staging:
+  production:
     branch: master
     commands:
-    - bin/deploy-staging.sh
+    - bin/deploy.sh
