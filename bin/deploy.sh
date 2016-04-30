@@ -19,5 +19,3 @@ sudo /opt/google-cloud-sdk/bin/gcloud docker push gcr.io/ledger-graph/ledger-gra
 
 sed -i -e 's/{{LEDGER_GRAPH_VERSION}}/${VERSION}/g' ledger-graph.yml > ledger-graph.versioned.yml
 sudo /opt/google-cloud-sdk/bin/kubectl replace -f ledger-graph.versioned.yml
-
-sudo /opt/google-cloud-sdk/bin/kubectl replace -f neo4j.yml
