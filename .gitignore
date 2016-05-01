@@ -38,5 +38,5 @@ VERSION
 # certs
 certs/*
 
-ledger-graph.versioned.yml
-db-credentials.set.yml
+*.versioned.yml
+*.set.yml

@@ -23,7 +23,13 @@ spec:
       name: neo4j
     spec:
       containers:
-      - image: neo4j:2.3
+      - env:
+        - name: NEO4J_AUTH
+          valueFrom:
+            secretKeyRef:
+              key: auth
+              name: neo4j-admin-credentials
+        image: neo4j:2.3
         imagePullPolicy: Always
         name: neo4j
         ports:
