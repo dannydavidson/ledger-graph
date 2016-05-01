@@ -10,9 +10,12 @@ services:
       NODE_ENV: "development"
       DB_USER: ${DB_USER}
       DB_PASS: ${DB_PASS}
+      MOUNT_PATH: '/ledger-graph'
     depends_on:
      - neo4j
+    container_name: api
   neo4j:
     image: neo4j/neo4j:2.3.3
     ports:
      - "7474:7474"
+    container_name: neo4j

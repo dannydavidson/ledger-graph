@@ -26,6 +26,8 @@ try {
 
 logger.setLevels(winston.config.syslog.levels);
 
+logger.info('MOUNT_PATH', MOUNT_PATH);
+
 app.get(MOUNT_PATH + '/', require('./handlers/version')(v || 'local', logger));
 app.get(MOUNT_PATH + '/ok', require('./handlers/health').isOk(db, logger));
 app.use(MOUNT_PATH + '/ledger', require('./routers/ledger')(db, logger));
