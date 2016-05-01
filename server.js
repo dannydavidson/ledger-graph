@@ -16,6 +16,7 @@ const logger = new winston.Logger({
     new winston.transports.Console()
   ]
 });
+const MOUNT_PATH = process.env.MOUNT_PATH || '';
 
 let v;
 
@@ -25,9 +26,9 @@ try {
 
 logger.setLevels(winston.config.syslog.levels);
 
-app.get('/', require('./handlers/version')(v || 'local', logger));
-app.get('/ok', require('./handlers/health').isOk(db, logger));
-app.use('/ledger', require('./routers/ledger')(db, logger));
+app.get(MOUNT_PATH + '/', require('./handlers/version')(v || 'local', logger));
+app.get(MOUNT_PATH + '/ok', require('./handlers/health').isOk(db, logger));
+app.use(MOUNT_PATH + '/ledger', require('./routers/ledger')(db, logger));
 
 app.listen(process.env.PORT || 11235, () => {
   logger.info('Server started.');
