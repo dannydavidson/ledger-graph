@@ -25,8 +25,8 @@ try {
 
 logger.setLevels(winston.config.syslog.levels);
 
-app.get('/', require('./handlers/health').isOk(db, logger));
-app.get('/v', require('./handlers/version')(v || 'local', logger));
+app.get('/', require('./handlers/version')(v || 'local', logger));
+app.get('/ok', require('./handlers/health').isOk(db, logger));
 app.use('/ledger', require('./routers/ledger')(db, logger));
 
 app.listen(process.env.PORT || 11235, () => {

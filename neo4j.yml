@@ -29,7 +29,7 @@ spec:
             secretKeyRef:
               key: auth
               name: neo4j-admin-credentials
-        image: neo4j:2.3
+        image: neo4j/neo4j:2.3.3
         imagePullPolicy: Always
         name: neo4j
         ports:
@@ -40,7 +40,7 @@ spec:
         terminationMessagePath: /dev/termination-log
         volumeMounts:
         - mountPath: /data
-          name: neo4j-disk
+          name: neo4j
       dnsPolicy: ClusterFirst
       restartPolicy: Always
       securityContext: {}
@@ -48,8 +48,8 @@ spec:
       volumes:
       - gcePersistentDisk:
           fsType: ext4
-          pdName: neo4j-disk
-        name: neo4j-disk
+          pdName: neo4j
+        name: neo4j
 ---
 apiVersion: v1
 kind: Service
