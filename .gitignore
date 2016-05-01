@@ -39,3 +39,4 @@ VERSION
 certs/*
 
 ledger-graph.versioned.yml
+db-credentials.set.yml
