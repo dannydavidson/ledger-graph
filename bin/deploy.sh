@@ -18,6 +18,5 @@ sudo docker build -q -t ledger-graph:${VERSION} .
 sudo docker tag ledger-graph:${VERSION} gcr.io/api-dannydavidson-com/ledger-graph:${VERSION}
 sudo /opt/google-cloud-sdk/bin/gcloud docker push gcr.io/api-dannydavidson-com/ledger-graph:${VERSION}
 
-sed -i -e 's/{{LEDGER_GRAPH_VERSION}}/${VERSION}/g' ledger-graph.yml > ledger-graph.versioned.yml
-cat ledger-graph.versioned.yml
+sed "s/{{LEDGER_GRAPH_VERSION}}/${VERSION}/g" ledger-graph.yml > ledger-graph.versioned.yml
 sudo /opt/google-cloud-sdk/bin/kubectl replace -f ledger-graph.versioned.yml
