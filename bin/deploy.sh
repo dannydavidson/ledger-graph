@@ -1,4 +1,4 @@
-VERSION="$(git rev-parse HEAD)"
+VERSION="$(git rev-parse --short HEAD)"
 echo ${VERSION} > VERSION
 echo $CLIENT_SECRET | base64 --decode > ${HOME}/client-secret.json
 
