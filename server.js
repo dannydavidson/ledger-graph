@@ -16,7 +16,7 @@ const logger = new winston.Logger({
     new winston.transports.Console()
   ]
 });
-const MOUNT_PATH = process.env.MOUNT_PATH || '';
+const MOUNT_PATH = process.env.MOUNT_PATH || '/ledger-graph';
 
 let v;
 
