@@ -35,7 +35,7 @@ spec:
             secretKeyRef:
               key: password
               name: db-credentials
-        image: gcr.io/ledger-graph/ledger-graph:${VERSION}
+        image: gcr.io/api-dannydavidson-com/ledger-graph:{{LEDGER_GRAPH_VERSION}}
         imagePullPolicy: Always
         name: ledger-graph
         ports:
