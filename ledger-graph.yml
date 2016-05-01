@@ -26,7 +26,7 @@ spec:
       containers:
       - env:
         - name: MOUNT_PATH
-          value: /ledger
+          value: '/ledger'
         - name: DB_USER
           valueFrom:
             secretKeyRef:
