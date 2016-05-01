@@ -13,7 +13,6 @@ sudo /opt/google-cloud-sdk/bin/gcloud auth activate-service-account --key-file $
 sudo /opt/google-cloud-sdk/bin/gcloud config set container/cluster api-dannydavidson-com
 sudo /opt/google-cloud-sdk/bin/gcloud container clusters get-credentials api-dannydavidson-com
 
-echo "Building and pushing ledger-graph:${VERSION}"
 sudo docker build -q -t ledger-graph:${VERSION} .
 sudo docker tag ledger-graph:${VERSION} gcr.io/api-dannydavidson-com/ledger-graph:${VERSION}
 sudo /opt/google-cloud-sdk/bin/gcloud docker push gcr.io/api-dannydavidson-com/ledger-graph:${VERSION}
