@@ -42,7 +42,6 @@ spec:
             secretKeyRef:
               key: mountpath
               name: ledger-graph-config
-          value: '/ledger-graph'
         imagePullPolicy: Always
         ports:
         - containerPort: 11235
