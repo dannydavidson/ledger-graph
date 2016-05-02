@@ -4,4 +4,4 @@ metadata:
   name: ledger-graph-config
 type: Opaque
 data:
-  mountpath: '{{MOUNT_PATH}}'
+  mountpath: {{MOUNT_PATH}}
