@@ -15,7 +15,7 @@ services:
      - neo4j
     container_name: api
   neo4j:
-    image: neo4j/neo4j:2.3.3
+    image: gcr.io/api-dannydavidson-com/neo4j:latest
     ports:
      - "7474:7474"
     container_name: neo4j
