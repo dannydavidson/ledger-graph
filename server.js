@@ -34,7 +34,7 @@ logger.setLevels(winston.config.syslog.levels);
 app.get('/', version);
 
 app.use((req, res, next) => {
-  logger.info('request', JSON.stringify(req, null, 2));
+  logger.info('request', req);
   next();
 });
 
