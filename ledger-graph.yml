@@ -26,6 +26,8 @@ spec:
       containers:
       - image: gcr.io/api-dannydavidson-com/ledger-graph:{{LEDGER_GRAPH_VERSION}}
         name: ledger-graph
+        command:
+          - DEBUG=express:router node server.js
         env:
         - name: DB_USER
           valueFrom:
