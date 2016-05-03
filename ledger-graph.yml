@@ -42,6 +42,11 @@ spec:
             secretKeyRef:
               key: mountpath
               name: ledger-graph-config
+        - name: DEBUG
+          valueFrom:
+            secretKeyRef:
+              key: debug
+              name: ledger-graph-config
         imagePullPolicy: Always
         ports:
         - containerPort: 11235
