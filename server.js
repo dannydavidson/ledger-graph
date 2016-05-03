@@ -37,8 +37,8 @@ app.get(MOUNT_PATH + '/ok', require('./handlers/health').isOk(db, logger));
 app.use(MOUNT_PATH + '/ledger', require('./routers/ledger')(db, logger));
 
 app.use((req, res) => {
-  logger.debug(req.originalUrl);
-  logger.debug(req.path);
+  logger.info('404 req.originalUrl', req.originalUrl);
+  logger.info('404 req.path', req.path);
   res.status(404).json({
     error: "Not Found"
   });
