@@ -5,6 +5,5 @@ module.exports = function(version, logger) {
     res.status(200).json({
       version: version
     });
-    logger.notice('Version is ' + version);
   };
 };
