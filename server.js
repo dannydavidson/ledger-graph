@@ -5,6 +5,8 @@ const express = require('express');
 const seraph = require('seraph');
 const winston = require('winston');
 
+const MOUNT_PATH = process.env.MOUNT_PATH || '';
+
 const app = express();
 const db = seraph({
   server: process.env.DB_ADDRESS || 'http://neo4j:7474',
@@ -16,22 +18,27 @@ const logger = new winston.Logger({
     new winston.transports.Console()
   ]
 });
-const MOUNT_PATH = process.env.MOUNT_PATH || '';
 
-let v;
+let version;
 
 try {
-  v = fs.readFileSync('./VERSION', 'utf-8').trim();
-} catch (e) {}
-
-logger.setLevels(winston.config.syslog.levels);
-logger.info('MOUNT_PATH', MOUNT_PATH);
+  version = fs.readFileSync('./VERSION', 'utf-8').trim();
+} catch (e) {
+  version = 'local';
+}
+version = require('./handlers/version')(version, logger);
 
 app.set('trust proxy', true);
+logger.setLevels(winston.config.syslog.levels);
 
-app.get('/', require('./handlers/version')(v || 'local', logger));
+app.get('/', version);
 
-app.get(MOUNT_PATH + '/', require('./handlers/version')(v || 'local', logger));
+app.use((req, res, next) => {
+  logger.info('request', JSON.stringify(req, null, 2));
+  next();
+});
+
+app.get(MOUNT_PATH + '/', version);
 app.get(MOUNT_PATH + '/ok', require('./handlers/health').isOk(db, logger));
 
 app.use(MOUNT_PATH + '/ledger', require('./routers/ledger')(db, logger));
@@ -40,7 +47,7 @@ app.use((req, res) => {
   logger.info('404 req.originalUrl', req.originalUrl);
   logger.info('404 req.path', req.path);
   res.status(404).json({
-    error: "Not Found"
+    error: 'Not Found'
   });
 });
 
