@@ -16,7 +16,7 @@ const logger = new winston.Logger({
     new winston.transports.Console()
   ]
 });
-const MOUNT_PATH = process.env.MOUNT_PATH || '/ledger-graph';
+const MOUNT_PATH = process.env.MOUNT_PATH || '';
 
 let v;
 
@@ -31,7 +31,14 @@ logger.info('MOUNT_PATH', MOUNT_PATH);
 app.get('/', require('./handlers/version')(v || 'local', logger));
 app.get(MOUNT_PATH + '/', require('./handlers/version')(v || 'local', logger));
 app.get(MOUNT_PATH + '/ok', require('./handlers/health').isOk(db, logger));
+
 app.use(MOUNT_PATH + '/ledger', require('./routers/ledger')(db, logger));
+
+app.use((req, res) => {
+  res.status(404).json({
+    error: "Not Found"
+  });
+});
 
 app.listen(process.env.PORT || 11235, () => {
   logger.info('Server started.');
