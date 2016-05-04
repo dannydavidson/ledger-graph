@@ -5,7 +5,7 @@ const express = require('express');
 const seraph = require('seraph');
 const winston = require('winston');
 
-const MOUNT_PATH = process.env.MOUNT_PATH || '';
+const MOUNT_PATH = typeof process.env.MOUNT_PATH === 'string' ? process.env.MOUNT_PATH.trim() : '';
 
 const app = express();
 const db = seraph({
