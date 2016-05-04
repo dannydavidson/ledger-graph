@@ -5,4 +5,3 @@ metadata:
 type: Opaque
 data:
   mountpath: {{MOUNT_PATH}}
-  debug: {{DEBUG}}
