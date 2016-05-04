@@ -31,9 +31,10 @@ version = require('./handlers/version')(version, logger);
 app.set('trust proxy', true);
 logger.setLevels(winston.config.syslog.levels);
 
-app.get('/', version);
+app.get('/', (req, res) => res.status(200).end());
 
 app.use((req, res, next) => {
+  logger.info('app.MOUNT_PATH', MOUNT_PATH);
   logger.info('request.route', req.route);
   logger.info('request.path', req.path);
   logger.info('request.hostname', req.hostname);
