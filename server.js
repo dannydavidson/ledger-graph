@@ -34,7 +34,11 @@ logger.setLevels(winston.config.syslog.levels);
 app.get('/', version);
 
 app.use((req, res, next) => {
-  logger.info('request', req);
+  logger.info('request.route', req.route);
+  logger.info('request.path', req.path);
+  logger.info('request.hostname', req.hostname);
+  logger.info('request.protocol', req.protocol);
+  logger.info('request.ip', req.ip);
   next();
 });
 
