@@ -4,11 +4,13 @@ const fs = require('fs');
 const express = require('express');
 const seraph = require('seraph');
 const winston = require('winston');
+const cors = require('cors');
+const jwt = require('express-jwt');
 
 // Pass when sitting behind load-balancer on a route (e.g. '/ledger-graph')
-const MOUNT_PATH = typeof process.env.MOUNT_PATH === 'string' ? process.env.MOUNT_PATH.trim() : '';
+const MOUNT_PATH = process.env.MOUNT_PATH || '';
 
-// Initialize app, neo4j connection and logger
+// Initialize app, neo4j connection, logger and auth
 const app = express();
 const db = seraph({
   server: process.env.DB_ADDRESS || 'http://neo4j:7474',
@@ -17,8 +19,15 @@ const db = seraph({
 });
 const logger = new winston.Logger({
   transports: [
-    new winston.transports.Console()
+    new winston.transports.Console({
+      json: true,
+      stringify: true
+    })
   ]
+});
+const auth = jwt({
+  secret: new Buffer(process.env.AUTH0_CLIENT_SECRET || '', 'base64'),
+  audience: process.env.AUTH0_CLIENT_ID || ''
 });
 
 // Pull version from file if available
@@ -36,6 +45,8 @@ app.set('trust proxy', true);
 // syslog levels play nice
 logger.setLevels(winston.config.syslog.levels);
 
+// set CORS
+app.use(cors());
 
 // Respond 200 at '/' to satisfy backend healthchecks
 app.get('/', (req, res) => res.status(200).end());

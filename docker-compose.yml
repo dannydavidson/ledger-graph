@@ -1,6 +1,6 @@
 version: '2'
 services:
-  api:
+  ledger-graph:
     build: .
     ports:
      - "11235:11235"
@@ -13,7 +13,7 @@ services:
       MOUNT_PATH: '/ledger-graph'
     depends_on:
      - neo4j
-    container_name: api
+    container_name: ledger-graph
   neo4j:
     image: gcr.io/api-dannydavidson-com/neo4j:latest
     ports:

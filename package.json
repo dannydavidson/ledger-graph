@@ -32,7 +32,9 @@
     "nodemon": "^1.9.1"
   },
   "dependencies": {
+    "cors": "^2.7.1",
     "express": "^4.13.4",
+    "express-jwt": "^3.3.0",
     "seraph": "^0.14.2",
     "winston": "^2.2.0"
   }
