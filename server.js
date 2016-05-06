@@ -26,8 +26,8 @@ const logger = new winston.Logger({
   ]
 });
 const auth = jwt({
-  secret: new Buffer(process.env.AUTH0_CLIENT_SECRET || '', 'base64'),
-  audience: process.env.AUTH0_CLIENT_ID || ''
+  secret: new Buffer(process.env.AUTH_CLIENT_SECRET || '', 'base64'),
+  audience: process.env.AUTH_CLIENT_ID || ''
 });
 
 // Pull version from file if available
@@ -50,6 +50,16 @@ app.use(cors());
 
 // Respond 200 at '/' to satisfy backend healthchecks
 app.get('/', (req, res) => res.status(200).end());
+
+// set up jwt auth
+app.use(auth);
+app.use(function (err, req, res, next) {
+  if (err.name === 'UnauthorizedError') {
+    res.status(401).json({
+      error: 'Not Authorized'
+    });
+  }
+});
 
 // set up system info routes
 app.get(MOUNT_PATH + '/', require('./handlers/version')(version, logger));
