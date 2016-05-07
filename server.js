@@ -20,8 +20,14 @@ const db = seraph({
 const logger = new winston.Logger({
   transports: [
     new winston.transports.Console({
-      json: true,
-      stringify: true
+      formatter: (options) => {
+        let hasMeta = options.meta && Object.keys(options.meta).length;
+
+        return 'time="' + new Date().toISOString() + '" ' +
+               'level="' +  options.level.toLowerCase() + '" ' +
+               'msg="' + (undefined !== options.message ? options.message : '') + '"' +
+               (hasMeta ? ' \n' + JSON.stringify(options.meta) : '');
+      }
     })
   ]
 });
@@ -53,7 +59,7 @@ app.get('/', (req, res) => res.status(200).end());
 
 // set up jwt auth
 app.use(auth);
-app.use(function (err, req, res, next) {
+app.use(function(err, req, res, next) {
   if (err.name === 'UnauthorizedError') {
     res.status(401).json({
       error: 'Not Authorized'
