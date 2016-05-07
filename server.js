@@ -18,13 +18,20 @@ const db = seraph({
   pass: process.env.DB_PASS || 'neo4j'
 });
 const logger = new winston.Logger({
+  levels: {
+    debug: 'debug',
+    info: 'info',
+    warning: 'warning',
+    error: 'error',
+    critical: 'critical'
+  },
   transports: [
     new winston.transports.Console({
       formatter: (options) => {
         let hasMeta = options.meta && Object.keys(options.meta).length;
 
         return 'time="' + new Date().toISOString() + '" ' +
-               'level="' +  options.level.toLowerCase() + '" ' +
+               'level=' +  options.level.toLowerCase() + ' ' +
                'msg="' + (undefined !== options.message ? options.message : '') + '"' +
                (hasMeta ? ' \n' + JSON.stringify(options.meta) : '');
       }
