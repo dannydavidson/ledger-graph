@@ -58,14 +58,14 @@ app.use(cors());
 app.get('/', (req, res) => res.status(200).end());
 
 // set up jwt auth
-app.use(auth);
-app.use(function(err, req, res, next) {
-  if (err.name === 'UnauthorizedError') {
-    res.status(401).json({
-      error: 'Not Authorized'
-    });
-  }
-});
+// app.use(auth);
+// app.use(function(err, req, res, next) {
+//   if (err.name === 'UnauthorizedError') {
+//     res.status(401).json({
+//       error: 'Not Authorized'
+//     });
+//   }
+// });
 
 // set up system info routes
 app.get(MOUNT_PATH + '/', require('./handlers/version')(version, logger));
