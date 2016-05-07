@@ -30,7 +30,7 @@ describe('handlers/health', () => {
       expect(res.send).toHaveBeenCalledWith('HEALTHY');
     });
 
-    it('responds 500 and logs emergency if db errors', () => {
+    it('responds 500 and logs critical if db errors', () => {
       handler({}, res);
 
       db.callback('read', {statusCode: 500});
