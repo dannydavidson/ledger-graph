@@ -36,7 +36,7 @@ const logger = new winston.Logger({
               message: options.message
             }
           )
-        );
+        ).trim();
       }
     })
   ]
