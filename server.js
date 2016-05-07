@@ -19,11 +19,11 @@ const db = seraph({
 });
 const logger = new winston.Logger({
   levels: {
-    debug: 'debug',
-    info: 'info',
-    warning: 'warning',
-    error: 'error',
-    critical: 'critical'
+    debug: 'DEBUG',
+    info: 'INFO',
+    warning: 'WARNING',
+    error: 'ERROR',
+    critical: 'CRITICAL'
   },
   transports: [
     new winston.transports.Console({
