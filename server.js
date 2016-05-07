@@ -27,14 +27,8 @@ const logger = new winston.Logger({
   },
   transports: [
     new winston.transports.Console({
-      formatter: (options) => {
-        let hasMeta = options.meta && Object.keys(options.meta).length;
-
-        return 'time="' + new Date().toISOString() + '" ' +
-               'level=' +  options.level.toUpperCase() + ' ' +
-               'msg="' + (undefined !== options.message ? options.message : '') + '"' +
-               (hasMeta ? ' \n' + JSON.stringify(options.meta) : '');
-      }
+      json: true,
+      //stringify: true
     })
   ]
 });
