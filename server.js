@@ -31,7 +31,7 @@ const logger = new winston.Logger({
         let hasMeta = options.meta && Object.keys(options.meta).length;
 
         return 'time="' + new Date().toISOString() + '" ' +
-               'level=' +  options.level.toLowerCase() + ' ' +
+               'level=' +  options.level.toUpperCase() + ' ' +
                'msg="' + (undefined !== options.message ? options.message : '') + '"' +
                (hasMeta ? ' \n' + JSON.stringify(options.meta) : '');
       }
