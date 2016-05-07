@@ -25,7 +25,7 @@ describe('handlers/health', () => {
       expect(db.read.calls[0].arguments[0]).toBe(0);
 
       db.callback('read', null);
-      expect(logger.notice).toHaveBeenCalled();
+      expect(logger.info).toHaveBeenCalled();
       expect(res.status).toHaveBeenCalledWith(200);
       expect(res.send).toHaveBeenCalledWith('HEALTHY');
     });
@@ -34,7 +34,7 @@ describe('handlers/health', () => {
       handler({}, res);
 
       db.callback('read', {statusCode: 500});
-      expect(logger.emerg).toHaveBeenCalled();
+      expect(logger.critical).toHaveBeenCalled();
       expect(res.status).toHaveBeenCalledWith(500);
       expect(res.send).toHaveBeenCalledWith('UNHEALTHY');
     });
