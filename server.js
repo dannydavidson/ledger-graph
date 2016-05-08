@@ -19,14 +19,15 @@ const db = seraph({
 });
 const logger = new winston.Logger({
   levels: {
-    debug: 'DEBUG',
-    info: 'INFO',
-    warning: 'WARNING',
-    error: 'ERROR',
-    critical: 'CRITICAL'
+    debug: 5,
+    info: 4,
+    warning: 3,
+    error: 2,
+    critical: 1
   },
   transports: [
     new winston.transports.Console({
+      level: process.env.LOG_LEVEL || 'debug',
       formatter: (options) => {
         return JSON.stringify(
           Object.assign(
@@ -57,9 +58,6 @@ try {
 
 // trust the proxies
 app.set('trust proxy', true);
-
-// syslog levels play nice
-logger.setLevels(winston.config.syslog.levels);
 
 // set CORS
 app.use(cors());
