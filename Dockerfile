@@ -12,4 +12,4 @@ ADD . .
 
 EXPOSE 11235
 
-CMD ['node', 'server.js']
+CMD ["node", "server.js"]
