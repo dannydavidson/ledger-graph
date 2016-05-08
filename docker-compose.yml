@@ -14,6 +14,7 @@ services:
     depends_on:
      - neo4j
     container_name: ledger-graph
+    command: node server.js
   neo4j:
     image: gcr.io/api-dannydavidson-com/neo4j:latest
     ports:

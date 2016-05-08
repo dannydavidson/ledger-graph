@@ -6,6 +6,7 @@ const seraph = require('seraph');
 const winston = require('winston');
 const cors = require('cors');
 const jwt = require('express-jwt');
+const gkeLogger = require('winston-gke');
 
 // Pass when sitting behind load-balancer on a route (e.g. '/ledger-graph')
 const MOUNT_PATH = process.env.MOUNT_PATH || '';
@@ -17,31 +18,7 @@ const db = seraph({
   user: process.env.DB_USER || 'neo4j',
   pass: process.env.DB_PASS || 'neo4j'
 });
-const logger = new winston.Logger({
-  levels: {
-    debug: 5,
-    info: 4,
-    warning: 3,
-    error: 2,
-    critical: 1
-  },
-  transports: [
-    new winston.transports.Console({
-      level: process.env.LOG_LEVEL || 'debug',
-      formatter: (options) => {
-        return JSON.stringify(
-          Object.assign(
-            options.meta && options.meta.length ? {meta: options.meta} : {},
-            {
-              severity: options.level.toUpperCase(),
-              message: options.message
-            }
-          )
-        ).trim();
-      }
-    })
-  ]
-});
+const logger = gkeLogger(new winston.Logger());
 const auth = jwt({
   secret: new Buffer(process.env.AUTH_CLIENT_SECRET || '', 'base64'),
   audience: process.env.AUTH_CLIENT_ID || ''
