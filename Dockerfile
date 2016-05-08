@@ -4,11 +4,11 @@ RUN mkdir -p /src
 WORKDIR /src
 
 # Install app dependencies
-ADD package.json /src
+ADD package.json ./package.json
 RUN npm install
 
 # Bundle app source
-ADD . /src
+ADD . .
 
 EXPOSE 11235
 
