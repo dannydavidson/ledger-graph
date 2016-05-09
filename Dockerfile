@@ -1,4 +1,4 @@
-FROM mhart/alpine-node:6
+FROM gcr.io/api-dannydavidson-com/alpine-node-k8s:latest
 
 RUN mkdir -p /src
 WORKDIR /src
