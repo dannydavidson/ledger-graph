@@ -2,7 +2,7 @@
 
 const fs = require('fs');
 const express = require('express');
-const seraph = require('seraph');
+const neo4j = require('neo4j-driver').v1;
 const winston = require('winston');
 const cors = require('cors');
 const jwt = require('express-jwt');
@@ -13,11 +13,9 @@ const MOUNT_PATH = process.env.MOUNT_PATH || '';
 
 // Initialize app, neo4j connection, logger and auth
 const app = express();
-const db = seraph({
-  server: process.env.DB_ADDRESS || 'http://neo4j:7474',
-  user: process.env.DB_USER || 'neo4j',
-  pass: process.env.DB_PASS || 'neo4j'
-});
+const db = neo4j.driver(process.env.DB_ADDRESS || 'bolt://neo4j',
+                        neo4j.auth.basic(process.env.DB_USER || 'neo4j',
+                                         process.env.DB_PASS || 'neo4j'));
 const logger = gkeLogger(new winston.Logger());
 const auth = jwt({
   secret: new Buffer(process.env.AUTH_CLIENT_SECRET || '', 'base64'),
@@ -66,7 +64,15 @@ app.use((req, res) => {
   });
 });
 
+// Shutdown gracefully
+process.on('SIGTERM', () => {
+  logger.info('Server shutting down.');
+  server.close();
+  db.close();
+  logger.info('Server is down, goodbye.');
+});
+
 // Start it up
-app.listen(process.env.PORT || 11235, () => {
+const server = app.listen(process.env.PORT || 11235, () => {
   logger.info('Server started.');
 });

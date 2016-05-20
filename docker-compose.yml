@@ -5,18 +5,21 @@ services:
     ports:
      - "11235:11235"
     volumes:
-     - .:/usr/src/app
+     - .:/src
     environment:
-      NODE_ENV: "development"
       DB_USER: ${DB_USER}
       DB_PASS: ${DB_PASS}
-      MOUNT_PATH: '/ledger-graph'
+      MOUNT_PATH: "/ledger-graph"
     depends_on:
      - neo4j
+    links:
+      - neo4j
     container_name: ledger-graph
-    command: node server.js
+    command: nodemon server.js
   neo4j:
-    image: gcr.io/api-dannydavidson-com/neo4j:latest
+    image: neo4j:3.0
     ports:
      - "7474:7474"
+     - "7473:7473"
+     - "7687:7687"
     container_name: neo4j

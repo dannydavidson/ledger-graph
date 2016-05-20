@@ -35,7 +35,7 @@
     "cors": "^2.7.1",
     "express": "^4.13.4",
     "express-jwt": "^3.3.0",
-    "seraph": "^0.14.2",
+    "neo4j-driver": "^1.0.0",
     "winston": "^2.2.0",
     "winston-gke": "^1.0.0"
   }

@@ -20,23 +20,28 @@ describe('handlers/health', () => {
       handler = isOk(db, logger);
     });
 
-    it('responds 200 and logs notice if db does not error', () => {
+    it('responds 200 and logs info if db does not error', () => {
       handler({}, res);
-      expect(db.read.calls[0].arguments[0]).toBe(0);
+      expect(db.session.run.calls[0].arguments[0].trim()).toBe('MATCH (a) RETURN a LIMIT 1');
+      expect(db.session.run.calls[0].arguments[1]).toBe(undefined);
 
-      db.callback('read', null);
-      expect(logger.info).toHaveBeenCalled();
-      expect(res.status).toHaveBeenCalledWith(200);
-      expect(res.send).toHaveBeenCalledWith('HEALTHY');
+      db.session.callThen()
+        .then(() => {
+          expect(logger.info).toHaveBeenCalled();
+          expect(res.status).toHaveBeenCalledWith(200);
+          expect(res.send).toHaveBeenCalledWith('HEALTHY');
+        });
     });
 
     it('responds 500 and logs critical if db errors', () => {
       handler({}, res);
 
-      db.callback('read', {statusCode: 500});
-      expect(logger.critical).toHaveBeenCalled();
-      expect(res.status).toHaveBeenCalledWith(500);
-      expect(res.send).toHaveBeenCalledWith('UNHEALTHY');
+      db.session.callCatch()
+        .then(() => {
+          expect(logger.critical).toHaveBeenCalled();
+          expect(res.status).toHaveBeenCalledWith(500);
+          expect(res.send).toHaveBeenCalledWith('UNHEALTHY');
+        });
     });
 
   });

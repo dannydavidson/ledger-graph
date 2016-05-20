@@ -8,9 +8,7 @@ exports.create = function(db, logger) {
 
 exports.read = function(db, logger) {
   return (req, res) => {
-    res.status(200).json({
-      value: 1
-    });
+
   };
 };
 

@@ -23,7 +23,7 @@ spec:
       name: neo4j
     spec:
       containers:
-      - image: gcr.io/api-dannydavidson-com/neo4j:latest
+      - image: neo4j:3.0
         imagePullPolicy: Always
         name: neo4j
         ports:
@@ -33,6 +33,9 @@ spec:
         resources: {}
         terminationMessagePath: /dev/termination-log
         volumeMounts:
+        - mountPath: /var/lib/neo4j/data/dbms
+          name: auth
+          readOnly: true
         - mountPath: /data
           name: neo4j
       dnsPolicy: ClusterFirst
@@ -40,10 +43,13 @@ spec:
       securityContext: {}
       terminationGracePeriodSeconds: 30
       volumes:
-      - gcePersistentDisk:
+      - name: neo4j
+        gcePersistentDisk:
           fsType: ext4
           pdName: neo4j
-        name: neo4j
+      - name: auth
+        secret:
+          secretName: neo4j-auth
 ---
 apiVersion: v1
 kind: Service

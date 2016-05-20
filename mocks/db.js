@@ -2,18 +2,44 @@
 
 const expect = require('expect');
 
-module.exports = function() {
-  let callbacks = {};
+var sessionMock = function() {
   let mock = {
-    read: function(cmd, cb) {
-      callbacks.read = cb;
-    },
-    callback: function(method) {
-      callbacks[method].apply(null, Array.prototype.slice.call(arguments, 1));
-    }
+    pending: []
   };
 
-  expect.spyOn(mock, 'read').andCallThrough();
+  mock.run = function(cypher, params) {
+    return new Promise((resolve, reject) => {
+      this.pending.push({resolve: resolve, reject: reject});
+    });
+  };
+
+  mock.callThen = function(results) {
+    return new Promise((resolve) => {
+      this.pending.shift().resolve(results);
+      resolve();
+    });
+  };
+
+  mock.callCatch = function(err) {
+    return new Promise((resolve) => {
+      this.pending.shift().reject(err);
+      resolve();
+    });
+  };
+
+  expect.spyOn(mock, 'run').andCallThrough();
+
+  return mock;
+
+};
+
+module.exports = function() {
+  let mock = {};
+
+  mock.session = function() {
+    mock.session = sessionMock();
+    return mock.session;
+  };
 
   return mock;
 };
