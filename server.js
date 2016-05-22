@@ -13,9 +13,9 @@ const MOUNT_PATH = process.env.MOUNT_PATH || '';
 
 // Initialize app, neo4j connection, logger and auth
 const app = express();
-const db = neo4j.driver(process.env.DB_ADDRESS || 'bolt://neo4j',
-                        neo4j.auth.basic(process.env.DB_USER || 'neo4j',
-                                         process.env.DB_PASS || 'neo4j'));
+const neo = neo4j.driver(process.env.NEO_ADDRESS || 'bolt://neo4j',
+                        neo4j.auth.basic(process.env.NEO_USER || 'neo4j',
+                                         process.env.NEO_PASS || 'neo4j'));
 const logger = gkeLogger(new winston.Logger());
 const auth = jwt({
   secret: new Buffer(process.env.AUTH_CLIENT_SECRET || '', 'base64'),
@@ -52,10 +52,10 @@ app.get('/', (req, res) => res.status(200).end());
 
 // set up system info routes
 app.get(MOUNT_PATH + '/', require('./handlers/version')(version, logger));
-app.get(MOUNT_PATH + '/ok', require('./handlers/health').isOk(db, logger));
+app.get(MOUNT_PATH + '/ok', require('./handlers/health').isOk(neo, logger));
 
 // set up routers to support API
-app.use(MOUNT_PATH + '/ledger', require('./routers/ledger')(db, logger));
+app.use(MOUNT_PATH + '/ledger', require('./routers/ledger')(neo, logger));
 
 // Handle 404
 app.use((req, res) => {
@@ -68,7 +68,7 @@ app.use((req, res) => {
 process.on('SIGTERM', () => {
   logger.info('Server shutting down.');
   server.close();
-  db.close();
+  neo.close();
   logger.info('Server is down, goodbye.');
 });
 

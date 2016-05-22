@@ -3,7 +3,7 @@
 const expect = require('expect');
 
 const loggerMock = require('../../mocks/logger');
-const resMock = require('../../mocks/res');
+const responseMock = require('../../mocks/response');
 const version = require('../../handlers/version');
 
 describe('handlers/version', () => {
@@ -13,7 +13,7 @@ describe('handlers/version', () => {
   beforeEach(() => {
     v = '123';
     logger = loggerMock();
-    res = resMock();
+    res = responseMock();
     handler = version(v, logger);
   });
 

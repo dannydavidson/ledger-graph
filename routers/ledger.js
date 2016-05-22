@@ -3,14 +3,14 @@
 const Router = require('express').Router;
 const transactions = require('../handlers/transactions');
 
-module.exports = function(db, logger) {
+module.exports = function(neo, logger) {
   const router = new Router();
 
-  router.post('/transactions', transactions.create(db, logger));
+  router.post('/transactions', transactions.create(neo, logger));
   router.route('/transactions/:id')
-    .get(transactions.read(db, logger))
-    .put(transactions.update(db, logger))
-    .delete(transactions.delete(db, logger));
+    .get(transactions.read(neo, logger))
+    .put(transactions.update(neo, logger))
+    .delete(transactions.delete(neo, logger));
 
   return router;
 };

@@ -2,45 +2,45 @@
 
 const expect = require('expect');
 
-const dbMock = require('../../mocks/db');
+const neoMock = require('../../mocks/neo');
 const loggerMock = require('../../mocks/logger');
-const resMock = require('../../mocks/res');
+const responseMock = require('../../mocks/response');
 const isOk = require('../../handlers/health').isOk;
 
 describe('handlers/health', () => {
 
   describe('isOk', () => {
 
-    let db, logger, res, handler;
+    let neo, logger, res, handler;
 
     beforeEach(() => {
-      db = dbMock();
+      neo = neoMock();
       logger = loggerMock();
-      res = resMock();
-      handler = isOk(db, logger);
+      res = responseMock();
+      handler = isOk(neo, logger);
     });
 
-    it('responds 200 and logs info if db does not error', () => {
+    it('responds 200 and logs info if neo does not error', () => {
       handler({}, res);
-      expect(db.session.run.calls[0].arguments[0].trim()).toBe('MATCH (a) RETURN a LIMIT 1');
-      expect(db.session.run.calls[0].arguments[1]).toBe(undefined);
 
-      db.session.callThen()
+      neo.session.callThen()
         .then(() => {
           expect(logger.info).toHaveBeenCalled();
           expect(res.status).toHaveBeenCalledWith(200);
           expect(res.send).toHaveBeenCalledWith('HEALTHY');
+          expect(neo.session.close).toHaveBeenCalled();
         });
     });
 
-    it('responds 500 and logs critical if db errors', () => {
+    it('responds 500 and logs critical if neo errors', () => {
       handler({}, res);
 
-      db.session.callCatch()
+      neo.session.callCatch()
         .then(() => {
           expect(logger.critical).toHaveBeenCalled();
           expect(res.status).toHaveBeenCalledWith(500);
           expect(res.send).toHaveBeenCalledWith('UNHEALTHY');
+          expect(neo.session.close).toHaveBeenCalled();
         });
     });
 

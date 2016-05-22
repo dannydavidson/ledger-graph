@@ -1,24 +1,24 @@
 'use strict';
 
-exports.create = function(db, logger) {
+exports.create = function(neo, logger) {
   return (req, res) => {
 
   };
 };
 
-exports.read = function(db, logger) {
+exports.read = function(neo, logger) {
   return (req, res) => {
 
   };
 };
 
-exports.update = function(db, logger) {
+exports.update = function(neo, logger) {
   return (req, res) => {
 
   };
 };
 
-exports.delete = function(db, logger) {
+exports.delete = function(neo, logger) {
   return (req, res) => {
 
   };

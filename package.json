@@ -5,7 +5,6 @@
   "main": "server.js",
   "scripts": {
     "test": "mocha --recursive test",
-    "start": "nodemon -L server.js",
     "cover": "istanbul cover _mocha ./test/**/*.js -- -R spec",
     "coverage": "npm run cover && cat ./coverage/lcov.info | ./node_modules/coveralls/bin/coveralls.js"
   },

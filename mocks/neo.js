@@ -7,6 +7,8 @@ var sessionMock = function() {
     pending: []
   };
 
+  mock.close = expect.createSpy();
+
   mock.run = function(cypher, params) {
     return new Promise((resolve, reject) => {
       this.pending.push({resolve: resolve, reject: reject});

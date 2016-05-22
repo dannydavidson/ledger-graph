@@ -1,8 +1,8 @@
 'use strict';
 
-exports.isOk = function(db, logger) {
+exports.isOk = function(neo, logger) {
   return (req, res) => {
-    const session = db.session();
+    const session = neo.session();
 
     session
       .run(`
