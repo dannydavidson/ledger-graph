@@ -1,3 +1,5 @@
+#!/usr/bin/env bash
+
 MOUNT_PATH=$(echo -n '/ledger-graph' | base64)
 
 sed "s/{{MOUNT_PATH}}/${MOUNT_PATH}/g" ledger-graph-config.yml > ledger-graph-config.set.yml

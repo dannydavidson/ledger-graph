@@ -7,8 +7,8 @@ services:
     volumes:
      - .:/src
     environment:
-      DB_USER: ${DB_USER}
-      DB_PASS: ${DB_PASS}
+      NEO_USER: ${NEO_USER}
+      NEO_PASS: ${NEO_PASS}
       MOUNT_PATH: "/ledger-graph"
     depends_on:
      - neo4j
