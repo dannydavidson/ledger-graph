@@ -2,12 +2,6 @@
 
 VERSION = $(cat VERSION)
 
-gcloud config set compute/zone us-central1-a
-gcloud config set project $GCLOUD_PROJECT
-
-gcloud --quiet components install kubectl
-gcloud --quiet components update
-
 docker tag ledger-graph:${VERSION} gcr.io/api-dannydavidson-com/ledger-graph:${VERSION}
 gcloud docker push gcr.io/api-dannydavidson-com/ledger-graph:${VERSION}
 
