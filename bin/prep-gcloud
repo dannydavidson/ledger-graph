@@ -1,7 +1,8 @@
 #!/usr/bin/env bash
 
+# symlink gcloud so its available on sudo path with circleci
 if [ -f /opt/google-cloud-sdk/bin/gcloud ]; then
-  gcloud=/opt/google-cloud-sdk/bin/gcloud
+  ln -s /opt/google-cloud-sdk/bin/gcloud /usr/local/bin/gcloud
 fi
 
 gcloud config set compute/zone us-central1-a
@@ -9,3 +10,8 @@ gcloud config set project $GCLOUD_PROJECT
 
 gcloud --quiet components install kubectl
 gcloud --quiet components update
+
+# symlink kubectl so its available on sudo path with circleci
+if [ -f /opt/google-cloud-sdk/bin/kubectl ]; then
+  ln -s /opt/google-cloud-sdk/bin/kubectl /usr/local/bin/kubectl
+fi
