@@ -1,3 +1,5 @@
 #!/usr/bin/env bash
 
-docker build -t ledger-graph:latest .
+VERSION="$(git rev-parse --short HEAD)"
+echo ${VERSION} > VERSION
+docker build -t ledger-graph:${VERSION} .
