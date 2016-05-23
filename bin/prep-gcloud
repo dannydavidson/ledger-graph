@@ -2,9 +2,8 @@
 
 # add gcloud and kubectl to PATH so its available with sudo on circleci
 if [ -z "$CIRCLECI" ]; then
-  echo 'WHAT!?!?!?!?'
-  echo 'export PATH=$PATH:/opt/google-cloud-sdk/bin' >> ~/.bashrc
-  source ~/.bashrc
+  echo 'export PATH=$PATH:/opt/google-cloud-sdk/bin' >> /root/.bashrc
+  source /root/.bashrc
 fi
 
 gcloud config set compute/zone us-central1-a
