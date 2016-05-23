@@ -2,17 +2,14 @@
 
 VERSION = $(cat VERSION)
 
-/opt/google-cloud-sdk/bin/gcloud config set compute/zone us-central1-a
-/opt/google-cloud-sdk/bin/gcloud config set project $GCLOUD_PROJECT
+gcloud config set compute/zone us-central1-a
+gcloud config set project $GCLOUD_PROJECT
 
-/opt/google-cloud-sdk/bin/gcloud --quiet components install kubectl
-/opt/google-cloud-sdk/bin/gcloud --quiet components update
-
-/opt/google-cloud-sdk/bin/gcloud config set container/cluster api-dannydavidson-com
-/opt/google-cloud-sdk/bin/gcloud container clusters get-credentials api-dannydavidson-com
+gcloud --quiet components install kubectl
+gcloud --quiet components update
 
 docker tag ledger-graph:${VERSION} gcr.io/api-dannydavidson-com/ledger-graph:${VERSION}
-/opt/google-cloud-sdk/bin/gcloud docker push gcr.io/api-dannydavidson-com/ledger-graph:${VERSION}
+gcloud docker push gcr.io/api-dannydavidson-com/ledger-graph:${VERSION}
 
 sed "s/{{LEDGER_GRAPH_VERSION}}/${VERSION}/g" ledger-graph.yml > ledger-graph.versioned.yml
-/opt/google-cloud-sdk/bin/kubectl apply -f ledger-graph.versioned.yml
+kubectl apply -f ledger-graph.versioned.yml

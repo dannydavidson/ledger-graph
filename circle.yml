@@ -3,6 +3,7 @@ machine:
     - docker
 dependencies:
   override:
+    - sudo bin/prep-gcloud
     - sudo bin/auth-gcr
     - sudo bin/build
 test:
