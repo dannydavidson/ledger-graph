@@ -1,5 +1,9 @@
 #!/usr/bin/env bash
 
+if [ -f /opt/google-cloud-sdk/bin/kubectl ]; then
+  kubectl=/opt/google-cloud-sdk/bin/kubectl
+fi
+
 MOUNT_PATH=$(echo -n '/ledger-graph' | base64)
 
 sed "s/{{MOUNT_PATH}}/${MOUNT_PATH}/g" ledger-graph-config.yml > ledger-graph-config.set.yml
